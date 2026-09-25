@@ -7,10 +7,10 @@ const skillData = {
         { name: "Microservices", level: 3, resource: "Udemy: Microservices Architecture", url: "https://www.udemy.com/course/microservices-architecture-the-complete-guide/?srsltid=AU7gw4UEZA4tMG1t25odkMRqIA5VkTHZk6rWtva7e8IQBrFNUCozpwo1" }
     ],
     "Junior Manual Tester": [
-        { name: "Test Cases Design", level: 1, resource: "ISTQB Syllabus" },
-        { name: "Jira / Bug Tracking", level: 1, resource: "Atlassian Docs" },
-        { name: "API Testing (Postman)", level: 2, resource: "Postman Learning Center" },
-        { name: "Test Automation Basics", level: 3, resource: "YouTube: Selenium Intro" }
+        { name: "Test Cases Design", level: 1, resource: "ISTQB Syllabus", url: "https://istqb.org/certifications/" },
+        { name: "Jira / Bug Tracking", level: 1, resource: "Atlassian Docs", url: "https://www.atlassian.com/software/jira/features/bug-tracking" },
+        { name: "API Testing (Postman)", level: 2, resource: "Postman Learning Center", url: "https://learning.postman.com/" },
+        { name: "Test Automation Basics", level: 3, resource: "YouTube: Selenium Intro", url: "https://www.youtube.com/watch?v=mOAXEQevCAE" }
     ]
 };
 
