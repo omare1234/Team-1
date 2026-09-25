@@ -13,40 +13,40 @@ const skillData = {
         { name: "Test Automation Basics", level: 3, resource: "YouTube: Selenium Intro", url: "https://www.youtube.com/watch?v=mOAXEQevCAE" }
     ],
     "Frontend Developer": [
-        { name: "HTML & CSS", level: 1, resource: "https://www.udemy.com/course/learn-html-css-website/?srsltid=AU7gw4WHSIcVOfa6PT6GMYnUY5Lfoda3l96J2boQnNZEjNyFi3tOTQYG" },
-        { name: "JavaScript Fundamentals", level: 1, resource: "https://www.youtube.com/playlist?list=PLIJrr73KDmRwNZAYsAmWV8HXrPju73emb" },
-        { name: "React.js Component Lifecycle", level: 2, resource: "https://www.udemy.com/course/react-the-complete-guide-incl-redux/" },
-        { name: "Advanced State Management", level: 3, resource: "https://www.youtube.com/watch?v=FsPR6rhZA90" }
+        { name: "HTML & CSS", level: 1, resource: "Udemy: HTML & CSS Website", url: "https://www.udemy.com/course/learn-html-css-website/?srsltid=AU7gw4WHSIcVOfa6PT6GMYnUY5Lfoda3l96J2boQnNZEjNyFi3tOTQYG" },
+        { name: "JavaScript Fundamentals", level: 1, resource: "YouTube: JavaScript Fundamentals", url: "https://www.youtube.com/playlist?list=PLIJrr73KDmRwNZAYsAmWV8HXrPju73emb" },
+        { name: "React.js Component Lifecycle", level: 2, resource: "Udemy: React Complete Guide", url: "https://www.udemy.com/course/react-the-complete-guide-incl-redux/" },
+        { name: "Advanced State Management", level: 3, resource: "YouTube: Advanced State Management", url: "https://www.youtube.com/watch?v=FsPR6rhZA90" }
     ],
     "DevOps Engineer": [
-        { name: "Linux & Shell Basics", level: 1, resource: "https://www.udemy.com/course/linux-basics-for-beginners/" },
-        { name: "Docker Fundamentals", level: 1, resource: "https://docs.docker.com/get-started/" },
-        { name: "CI/CD Pipelines", level: 2, resource: "https://docs.github.com/en/actions" },
-        { name: "Kubernetes", level: 3, resource: "https://kubernetes.io/docs/tutorials/kubernetes-basics/" }
+        { name: "Linux & Shell Basics", level: 1, resource: "Udemy: Linux Basics for Beginners", url: "https://www.udemy.com/course/linux-basics-for-beginners/" },
+        { name: "Docker Fundamentals", level: 1, resource: "Docker Docs", url: "https://docs.docker.com/get-started/" },
+        { name: "CI/CD Pipelines", level: 2, resource: "GitHub Actions Docs", url: "https://docs.github.com/en/actions" },
+        { name: "Kubernetes", level: 3, resource: "Kubernetes Docs", url: "https://kubernetes.io/docs/tutorials/kubernetes-basics/" }
     ],
     "Data Analyst": [
-        { name: "Excel & Data Basics", level: 1, resource: "https://support.microsoft.com/en-us/excel" },
-        { name: "SQL Fundamentals", level: 1, resource: "https://www.udemy.com/course/sql-for-real-world-data-analysis/" },
-        { name: "Python for Data Analysis", level: 2, resource: "https://pandas.pydata.org/docs/getting_started/index.html" },
-        { name: "Data Visualization", level: 3, resource: "https://www.tableau.com/learn/training" }
+        { name: "Excel & Data Basics", level: 1, resource: "Microsoft Excel Support", url: "https://support.microsoft.com/en-us/excel" },
+        { name: "SQL Fundamentals", level: 1, resource: "Udemy: SQL for Data Analysis", url: "https://www.udemy.com/course/sql-for-real-world-data-analysis/" },
+        { name: "Python for Data Analysis", level: 2, resource: "Pandas Docs", url: "https://pandas.pydata.org/docs/getting_started/index.html" },
+        { name: "Data Visualization", level: 3, resource: "Tableau Training", url: "https://www.tableau.com/learn/training" }
     ],
     "Scrum Master": [
-        { name: "Agile Fundamentals", level: 1, resource: "https://www.scrum.org/resources" },
-        { name: "Scrum Framework", level: 1, resource: "https://scrumguides.org/" },
-        { name: "Facilitation Skills", level: 2, resource: "https://www.atlassian.com/agile" },
-        { name: "Scaling Agile", level: 3, resource: "https://scaledagileframework.com/" }
+        { name: "Agile Fundamentals", level: 1, resource: "Scrum.org Resources", url: "https://www.scrum.org/resources" },
+        { name: "Scrum Framework", level: 1, resource: "Scrum Guides", url: "https://scrumguides.org/" },
+        { name: "Facilitation Skills", level: 2, resource: "Atlassian Agile Coach", url: "https://www.atlassian.com/agile" },
+        { name: "Scaling Agile", level: 3, resource: "Scaled Agile Framework", url: "https://scaledagileframework.com/" }
     ],
     "Cloud Architect": [
-        { name: "Cloud Fundamentals", level: 1, resource: "https://aws.amazon.com/training/learn-about/cloud-practitioner/" },
-        { name: "Networking Basics", level: 1, resource: "https://learn.microsoft.com/en-us/training/paths/azure-fundamentals/" },
-        { name: "Architecture Design", level: 2, resource: "https://aws.amazon.com/architecture/well-architected/" },
-        { name: "Security & Compliance", level: 3, resource: "https://cloud.google.com/architecture" }
+        { name: "Cloud Fundamentals", level: 1, resource: "AWS Cloud Practitioner", url: "https://aws.amazon.com/training/learn-about/cloud-practitioner/" },
+        { name: "Networking Basics", level: 1, resource: "Azure Fundamentals", url: "https://learn.microsoft.com/en-us/training/paths/azure-fundamentals/" },
+        { name: "Architecture Design", level: 2, resource: "AWS Well-Architected", url: "https://aws.amazon.com/architecture/well-architected/" },
+        { name: "Security & Compliance", level: 3, resource: "Google Cloud Architecture", url: "https://cloud.google.com/architecture" }
     ],
     "UX/UI Designer": [
-        { name: "Design Fundamentals", level: 1, resource: "https://www.nngroup.com/articles/" },
-        { name: "Wireframing & Prototyping", level: 1, resource: "https://www.youtube.com/watch?v=ezldKx-jPag" },
-        { name: "User Research", level: 2, resource: "https://www.youtube.com/watch?v=YD0egXpd-Y0" },
-        { name: "Design Systems", level: 3, resource: "https://www.designbetter.co/design-systems-handbook" }
+        { name: "Design Fundamentals", level: 1, resource: "NNGroup Articles", url: "https://www.nngroup.com/articles/" },
+        { name: "Wireframing & Prototyping", level: 1, resource: "YouTube: Figma Tutorial", url: "https://www.youtube.com/watch?v=ezldKx-jPag" },
+        { name: "User Research", level: 2, resource: "YouTube: User Research Basics", url: "https://www.youtube.com/watch?v=YD0egXpd-Y0" },
+        { name: "Design Systems", level: 3, resource: "Design Systems Handbook", url: "https://www.designbetter.co/design-systems-handbook" }
     ]
 };
 
