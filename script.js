@@ -7,22 +7,22 @@ const skillData = {
         { name: "Microservices", level: 3, resource: "Udemy: Microservices Architecture", url: "https://www.udemy.com/course/microservices-architecture-the-complete-guide/?srsltid=AU7gw4UEZA4tMG1t25odkMRqIA5VkTHZk6rWtva7e8IQBrFNUCozpwo1" }
     ],
     "Junior Manual Tester": [
-        { name: "Test Cases Design", level: 1, resource: "ISTQB Syllabus", url: "https://istqb.org/certifications/" },
+        { name: "Test Cases Design", level: 1, resource: "ISTQB Syllabus", url: "https://www.youtube.com/watch?v=bIbkdmHJoHs&list=PLj5VKaW115t0LT-7DICjHkGuxdTEqFI91" },
         { name: "Jira / Bug Tracking", level: 1, resource: "Atlassian Docs", url: "https://www.atlassian.com/software/jira/features/bug-tracking" },
-        { name: "API Testing (Postman)", level: 2, resource: "Postman Learning Center", url: "https://learning.postman.com/" },
+        { name: "API Testing (Postman)", level: 2, resource: "Postman Learning Center", url: "https://www.youtube.com/watch?v=T_PV6KDzq_Y&list=PLhW3qG5bs-L9bT4CL6lzCTjo82k42hbmu" },
         { name: "Test Automation Basics", level: 3, resource: "YouTube: Selenium Intro", url: "https://www.youtube.com/watch?v=mOAXEQevCAE" }
     ],
     "Frontend Developer": [
-        { name: "HTML & CSS", level: 1, resource: "Udemy: HTML & CSS Website", url: "https://www.udemy.com/course/learn-html-css-website/?srsltid=AU7gw4WHSIcVOfa6PT6GMYnUY5Lfoda3l96J2boQnNZEjNyFi3tOTQYG" },
+        { name: "HTML & CSS", level: 1, resource: "Udemy: HTML & CSS Website", url: "https://www.youtube.com/watch?v=5bMdjkfvONE" },
         { name: "JavaScript Fundamentals", level: 1, resource: "YouTube: JavaScript Fundamentals", url: "https://www.youtube.com/playlist?list=PLIJrr73KDmRwNZAYsAmWV8HXrPju73emb" },
-        { name: "React.js Component Lifecycle", level: 2, resource: "Udemy: React Complete Guide", url: "https://www.udemy.com/course/react-the-complete-guide-incl-redux/" },
+        { name: "React.js Component Lifecycle", level: 2, resource: "Udemy: React Complete Guide", url: "https://www.youtube.com/watch?v=CgkZ7MvWUAA" },
         { name: "Advanced State Management", level: 3, resource: "YouTube: Advanced State Management", url: "https://www.youtube.com/watch?v=FsPR6rhZA90" }
     ],
     "DevOps Engineer": [
-        { name: "Linux & Shell Basics", level: 1, resource: "Udemy: Linux Basics for Beginners", url: "https://www.udemy.com/course/linux-basics-for-beginners/" },
-        { name: "Docker Fundamentals", level: 1, resource: "Docker Docs", url: "https://docs.docker.com/get-started/" },
-        { name: "CI/CD Pipelines", level: 2, resource: "GitHub Actions Docs", url: "https://docs.github.com/en/actions" },
-        { name: "Kubernetes", level: 3, resource: "Kubernetes Docs", url: "https://kubernetes.io/docs/tutorials/kubernetes-basics/" }
+        { name: "Linux & Shell Basics", level: 1, resource: "Udemy: Linux Basics for Beginners", url: "https://www.youtube.com/watch?v=VbEx7B_PTOE&list=PLIhvC56v63IJIujb5cyE13oLuyORZpdkL" },
+        { name: "Docker Fundamentals", level: 1, resource: "Docker Docs", url: "https://www.youtube.com/watch?v=gthvzSE4yIY&list=PLTk5ZYSbd9Mg51szw21_75Hs1xUpGObDm" },
+        { name: "CI/CD Pipelines", level: 2, resource: "GitHub Actions Docs", url: "https://www.youtube.com/watch?v=AknbizcLq4w" },
+        { name: "Kubernetes", level: 3, resource: "Kubernetes Docs", url: "https://www.youtube.com/watch?v=s_o8dwzRlu4&t=104s" }
     ],
     "Data Analyst": [
         { name: "Excel & Data Basics", level: 1, resource: "Microsoft Excel Support", url: "https://support.microsoft.com/en-us/excel" },
@@ -37,13 +37,13 @@ const skillData = {
         { name: "Scaling Agile", level: 3, resource: "Scaled Agile Framework", url: "https://scaledagileframework.com/" }
     ],
     "Cloud Architect": [
-        { name: "Cloud Fundamentals", level: 1, resource: "AWS Cloud Practitioner", url: "https://aws.amazon.com/training/learn-about/cloud-practitioner/" },
-        { name: "Networking Basics", level: 1, resource: "Azure Fundamentals", url: "https://learn.microsoft.com/en-us/training/paths/azure-fundamentals/" },
+        { name: "Cloud Fundamentals", level: 1, resource: "AWS Cloud Fundamentals", url: "https://www.youtube.com/watch?v=NPEsD6n9A_I&list=PLGjZwEtPN7j-Q59JYso3L4_yoCjj2syrM" },
+        { name: "Networking Basics", level: 1, resource: "Networking Fundamentals", url: "https://www.youtube.com/watch?v=bj-Yfakjllc&list=PLIFyRwBY_4bRLmKfP1KnZA6rZbRHtxmXi" },
         { name: "Architecture Design", level: 2, resource: "AWS Well-Architected", url: "https://aws.amazon.com/architecture/well-architected/" },
-        { name: "Security & Compliance", level: 3, resource: "Google Cloud Architecture", url: "https://cloud.google.com/architecture" }
+        { name: "Security & Compliance", level: 3, resource: "Google Cloud Architecture", url: "https://www.youtube.com/watch?v=LkjnDtKXu1o&list=PL0azhNeBK66Ib5bdokWTyNyx3srkrzbUo" }
     ],
     "UX/UI Designer": [
-        { name: "Design Fundamentals", level: 1, resource: "NNGroup Articles", url: "https://www.nngroup.com/articles/" },
+        { name: "Design Fundamentals", level: 1, resource: "YouTube: Design Fundamentals", url: "https://www.youtube.com/watch?v=GQS7wPujL2k&list=PLgGbWId6zgaXiWYDAcJbXzBNlAnYg7pgL" },
         { name: "Wireframing & Prototyping", level: 1, resource: "YouTube: Figma Tutorial", url: "https://www.youtube.com/watch?v=ezldKx-jPag" },
         { name: "User Research", level: 2, resource: "YouTube: User Research Basics", url: "https://www.youtube.com/watch?v=YD0egXpd-Y0" },
         { name: "Design Systems", level: 3, resource: "Design Systems Handbook", url: "https://www.designbetter.co/design-systems-handbook" }
