@@ -7,40 +7,40 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
- 
+
     <!-- LOGIN / REGISTER SCREEN -->
     <div id="login-screen" class="login-screen">
         <div class="login-card">
             <h1>Academy Matrix</h1>
- 
+
             <div id="login-form-container">
                 <h2>Sign In</h2>
                 <form id="login-form">
                     <label for="login-username">Username</label>
                     <input type="text" id="login-username" autocomplete="username" required>
- 
+
                     <label for="login-password">Password</label>
                     <input type="password" id="login-password" autocomplete="current-password" required>
- 
+
                     <p id="login-error" class="error-msg hidden"></p>
                     <button type="submit">Sign In</button>
                 </form>
                 <p class="switch-link">New consultant? <a href="#" id="show-register-link">Register here</a></p>
                 <p class="hint-text">Academy Lead demo login: <strong>admin</strong> / <strong>admin123</strong></p>
             </div>
- 
+
             <div id="register-form-container" class="hidden">
                 <h2>Consultant Registration</h2>
                 <form id="register-form">
                     <label for="reg-name">Full Name</label>
                     <input type="text" id="reg-name" required>
- 
+
                     <label for="reg-username">Username</label>
                     <input type="text" id="reg-username" autocomplete="username" required>
- 
+
                     <label for="reg-password">Password</label>
                     <input type="password" id="reg-password" autocomplete="new-password" required>
- 
+
                     <label for="reg-role">Your Role</label>
                     <select id="reg-role">
                         <option value="Java Developer">Java Developer</option>
@@ -52,7 +52,7 @@
                         <option value="Cloud Architect">Cloud Architect</option>
                         <option value="UX/UI Designer">UX/UI Designer</option>
                     </select>
- 
+
                     <p id="register-error" class="error-msg hidden"></p>
                     <button type="submit">Create Account</button>
                 </form>
@@ -60,8 +60,8 @@
             </div>
         </div>
     </div>
- 
-    <!-- MAIN APP (hidden until a user logs in) -->
+
+    <!-- MAIN APP -->
     <div id="app-wrapper" class="hidden">
         <nav class="navbar">
             <h1>Academy Matrix</h1>
@@ -70,7 +70,7 @@
                 <button id="btn-logout">Log Out</button>
             </div>
         </nav>
- 
+
         <main id="app-container">
             <!-- CONSULTANT VIEW -->
             <section id="user-view" class="view-section hidden">
@@ -88,14 +88,12 @@
                         <option value="UX/UI Designer">UX/UI Designer</option>
                     </select>
                 </div>
- 
+
                 <div class="matrix-container">
                     <h3>The Matrix</h3>
-                    <div id="skills-grid" class="grid">
-                        <!-- Skills will be injected here by JavaScript -->
-                    </div>
+                    <div id="skills-grid" class="grid"></div>
                 </div>
- 
+
                 <div class="smart-target-container">
                     <h3>SMART Targeter</h3>
                     <p>Select a missing skill to generate a SMART goal:</p>
@@ -104,26 +102,29 @@
                     <div id="smart-output" class="hidden card"></div>
                 </div>
             </section>
- 
-            <!-- ACADEMY LEAD VIEW (ADMIN) -->
+
+            <!-- ACADEMY LEAD VIEW -->
             <section id="admin-view" class="view-section hidden">
                 <div class="header-card">
                     <h2>Academy Lead Dashboard</h2>
                 </div>
- 
+
                 <div class="grid admin-grid">
                     <div class="card">
                         <h3>User Management</h3>
                         <ul id="user-list"></ul>
                     </div>
- 
+
                     <div class="card">
                         <h3>Global Skills Heatmap</h3>
-                        <div id="heatmap-container">
-                            <!-- Heatmap injected by JS -->
-                        </div>
+                        <div id="heatmap-container"></div>
                     </div>
- 
+
+                    <div class="card">
+                        <h3>Consultant Completion Heatmap</h3>
+                        <div id="consultant-heatmap-container"></div>
+                    </div>
+
                     <div class="card">
                         <h3>Target Review</h3>
                         <ul id="target-list"></ul>
@@ -132,7 +133,7 @@
             </section>
         </main>
     </div>
- 
+
     <script src="script.js"></script>
 </body>
 </html>
