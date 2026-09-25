@@ -1,4 +1,4 @@
-// --- DATABASE & DATA STRUCTURE ---
+// DATABASE & DATA STRUCTURE
 const skillData = {
     "Java Developer": [
         { name: "Java Basics", level: 1, resource: "YouTube: Java Full Course", url: "https://www.youtube.com/watch?v=xTtL8E4LzTQ" },
@@ -50,50 +50,75 @@ const skillData = {
     ]
 };
 
-// --- DATABASE INITIALIZATION ---
-// NOTE: This is a client-side demo. Passwords are stored in plain text in
-// localStorage, which is fine for prototyping but NOT secure for real users
-// or real passwords. A production version needs a real backend with hashed
-// credentials and server-side session checks.
+// DATABASE INITIALIZATION
 function seedDatabase() {
     const initialData = {
         users: [
-            { id: 1, name: "Alex Consultant", username: "alex", password: "consultant123", accountType: "consultant", role: "Java Developer", skills: {}, targets: [] },
-            { id: 2, name: "Sarah Smith", username: "sarah", password: "consultant123", accountType: "consultant", role: "Junior Manual Tester", skills: { "Test Cases Design": "Complete" }, targets: ["Learn Postman by Friday"] },
-            { id: 3, name: "Jordan Lead", username: "admin", password: "admin123", accountType: "admin", role: null, skills: {}, targets: [] }
+            {
+                id: 1,
+                name: "Alex Consultant",
+                username: "alex",
+                password: "consultant123",
+                accountType: "consultant",
+                role: "Java Developer",
+                skills: {},
+                targets: []
+            },
+            {
+                id: 2,
+                name: "Sarah Smith",
+                username: "sarah",
+                password: "consultant123",
+                accountType: "consultant",
+                role: "Junior Manual Tester",
+                skills: { "Test Cases Design": "Complete" },
+                targets: ["Learn Postman by Friday"]
+            },
+            {
+                id: 3,
+                name: "Jordan Lead",
+                username: "admin",
+                password: "admin123",
+                accountType: "admin",
+                role: null,
+                skills: {},
+                targets: []
+            }
         ],
         nextUserId: 4
     };
+
     localStorage.setItem('academyData', JSON.stringify(initialData));
     return initialData;
 }
 
 let db = JSON.parse(localStorage.getItem('academyData'));
-// If there's no data yet, or it's from the old schema (no username/accountType
-// fields), reset to the new seed data rather than crashing on login.
+
 if (!db || !db.users || !db.users[0] || !db.users[0].username || !db.users[0].accountType) {
     db = seedDatabase();
 }
 
-let currentUser = null; // set on successful login
+let currentUser = null;
 
 function saveData() {
     localStorage.setItem('academyData', JSON.stringify(db));
 }
 
-// --- SESSION HELPERS ---
+// SESSION HELPERS
 function getSession() {
     const raw = localStorage.getItem('academySession');
     return raw ? JSON.parse(raw) : null;
 }
+
 function setSession(userId) {
     localStorage.setItem('academySession', JSON.stringify({ userId }));
 }
+
 function clearSession() {
     localStorage.removeItem('academySession');
 }
 
-// --- DOM ELEMENTS ---
+// DOM ELEMENTS
 const loginScreen = document.getElementById('login-screen');
 const appWrapper = document.getElementById('app-wrapper');
 const loginFormContainer = document.getElementById('login-form-container');
@@ -111,26 +136,29 @@ const roleSelect = document.getElementById('role-select');
 const skillsGrid = document.getElementById('skills-grid');
 const gapSelect = document.getElementById('gap-select');
 
-// --- LOGIN / REGISTER SCREEN SWITCHING ---
+// LOGIN / REGISTER SCREEN SWITCHING
 document.getElementById('show-register-link').addEventListener('click', (e) => {
     e.preventDefault();
     loginFormContainer.classList.add('hidden');
     registerFormContainer.classList.remove('hidden');
 });
+
 document.getElementById('show-login-link').addEventListener('click', (e) => {
     e.preventDefault();
     registerFormContainer.classList.add('hidden');
     loginFormContainer.classList.remove('hidden');
 });
 
-// --- LOGIN ---
+// LOGIN
 loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
+
     const username = document.getElementById('login-username').value.trim();
     const password = document.getElementById('login-password').value;
 
     const user = db.users.find(u =>
-        u.username.toLowerCase() === username.toLowerCase() && u.password === password
+        u.username.toLowerCase() === username.toLowerCase() &&
+        u.password === password
     );
 
     if (!user) {
@@ -145,11 +173,10 @@ loginForm.addEventListener('submit', (e) => {
     enterApp(user);
 });
 
-// --- CONSULTANT SELF-REGISTRATION ---
-// Only consultants can self-register here. Academy Lead accounts are
-// provisioned separately (seeded above) and are not created through this form.
+// CONSULTANT SELF-REGISTRATION
 registerForm.addEventListener('submit', (e) => {
     e.preventDefault();
+
     const name = document.getElementById('reg-name').value.trim();
     const username = document.getElementById('reg-username').value.trim();
     const password = document.getElementById('reg-password').value;
@@ -161,7 +188,10 @@ registerForm.addEventListener('submit', (e) => {
         return;
     }
 
-    const usernameTaken = db.users.some(u => u.username.toLowerCase() === username.toLowerCase());
+    const usernameTaken = db.users.some(
+        u => u.username.toLowerCase() === username.toLowerCase()
+    );
+
     if (usernameTaken) {
         registerError.innerText = 'That username is already taken.';
         registerError.classList.remove('hidden');
@@ -180,6 +210,7 @@ registerForm.addEventListener('submit', (e) => {
         skills: {},
         targets: []
     };
+
     db.users.push(newUser);
     saveData();
 
@@ -188,19 +219,21 @@ registerForm.addEventListener('submit', (e) => {
     enterApp(newUser);
 });
 
-// --- LOGOUT ---
+// LOGOUT
 btnLogout.addEventListener('click', () => {
     clearSession();
     currentUser = null;
     location.reload();
 });
 
-// --- ENTER APP (role-gated: each account type only ever sees its own view) ---
+// ENTER APP
 function enterApp(user) {
     currentUser = user;
     loginScreen.classList.add('hidden');
     appWrapper.classList.remove('hidden');
-    welcomeMsg.innerText = `Signed in as ${user.name} (${user.accountType === 'admin' ? 'Academy Lead' : 'Consultant'})`;
+
+    welcomeMsg.innerText =
+        `Signed in as ${user.name} (${user.accountType === 'admin' ? 'Academy Lead' : 'Consultant'})`;
 
     userView.classList.add('hidden');
     adminView.classList.add('hidden');
@@ -214,20 +247,20 @@ function enterApp(user) {
     }
 }
 
-// --- APP INIT: resume session if one exists ---
+// APP INIT: RESUME SESSION
 (function init() {
     const session = getSession();
+
     if (session) {
         const user = db.users.find(u => u.id === session.userId);
+
         if (user) {
             enterApp(user);
-            return;
         }
     }
-    // No valid session -> login screen stays visible (its default state)
 })();
 
-// --- USER VIEW LOGIC ---
+// USER VIEW LOGIC
 roleSelect.addEventListener('change', (e) => {
     currentUser.role = e.target.value;
     saveData();
@@ -235,7 +268,7 @@ roleSelect.addEventListener('change', (e) => {
 });
 
 function renderUserView() {
-    if (!currentUser || currentUser.accountType !== 'consultant') return; // guard
+    if (!currentUser || currentUser.accountType !== 'consultant') return;
 
     roleSelect.value = currentUser.role;
     skillsGrid.innerHTML = '';
@@ -244,7 +277,7 @@ function renderUserView() {
     const roleSkills = skillData[currentUser.role] || [];
 
     roleSkills.forEach(skill => {
-        const status = currentUser.skills[skill.name] || 'Not Started';
+        const status = currentUser.skills?.[skill.name] || 'Not Started';
 
         const card = document.createElement('div');
         card.className = 'skill-card';
@@ -253,13 +286,16 @@ function renderUserView() {
                 <strong>${skill.name}</strong>
                 <span class="badge lvl-${skill.level}">Level ${skill.level}</span>
             </div>
-            <a href="${skill.url || '#'}" target="_blank" rel="noopener noreferrer" class="resource-link">📚 ${skill.resource}</a>
+            <a href="${skill.url || '#'}" target="_blank" rel="noopener noreferrer" class="resource-link">
+                📚 ${skill.resource}
+            </a>
             <select onchange="updateSkill('${skill.name}', this.value)">
                 <option value="Not Started" ${status === 'Not Started' ? 'selected' : ''}>Not Started</option>
                 <option value="In Progress" ${status === 'In Progress' ? 'selected' : ''}>In Progress</option>
                 <option value="Complete" ${status === 'Complete' ? 'selected' : ''}>Complete</option>
             </select>
         `;
+
         skillsGrid.appendChild(card);
 
         if (status !== 'Complete') {
@@ -277,10 +313,14 @@ window.updateSkill = function (skillName, newStatus) {
     renderUserView();
 };
 
-// SMART Targeter Logic
+// SMART TARGETER
 document.getElementById('generate-smart-btn').addEventListener('click', () => {
     const skill = gapSelect.value;
-    if (!skill) return alert('Please select a skill gap first!');
+
+    if (!skill) {
+        alert('Please select a skill gap first!');
+        return;
+    }
 
     const smartGoal = `
         <strong>Specific:</strong> I will master the fundamentals of ${skill}.<br>
@@ -298,42 +338,86 @@ document.getElementById('generate-smart-btn').addEventListener('click', () => {
     saveData();
 });
 
-// --- ADMIN VIEW LOGIC ---
+// ADMIN VIEW LOGIC
 function renderAdminView() {
-    if (!currentUser || currentUser.accountType !== 'admin') return; // guard
+    if (!currentUser || currentUser.accountType !== 'admin') return;
 
     const userList = document.getElementById('user-list');
     const targetList = document.getElementById('target-list');
     const heatmap = document.getElementById('heatmap-container');
+    const consultantHeatmap = document.getElementById('consultant-heatmap-container');
 
     userList.innerHTML = '';
     targetList.innerHTML = '';
     heatmap.innerHTML = '';
+    consultantHeatmap.innerHTML = '';
 
-    let skillStats = {};
+    const skillStats = {};
 
-    db.users.filter(u => u.accountType === 'consultant').forEach(user => {
-        userList.innerHTML += `<li><strong>${user.name}</strong> - ${user.role}</li>`;
+    db.users
+        .filter(user => user.accountType === 'consultant')
+        .forEach(user => {
+            userList.innerHTML += `
+                <li><strong>${user.name}</strong> - ${user.role || 'No role'}</li>
+            `;
 
-        user.targets.forEach(t => {
-            targetList.innerHTML += `<li>${user.name}: <em>${t}</em></li>`;
+            (user.targets || []).forEach(target => {
+                targetList.innerHTML += `
+                    <li>${user.name}: <em>${target}</em></li>
+                `;
+            });
+
+            const skillsForRole = skillData[user.role] || [];
+            const completed = skillsForRole.filter(
+                skill => user.skills?.[skill.name] === 'Complete'
+            ).length;
+
+            const percentage = skillsForRole.length
+                ? Math.round((completed / skillsForRole.length) * 100)
+                : 0;
+
+            consultantHeatmap.innerHTML += `
+                <div class="consultant-heatmap-row">
+                    <div class="consultant-heatmap-label">
+                        <strong>${user.name}</strong>
+                        <span>${user.role || 'No role'} · ${completed}/${skillsForRole.length} skills complete</span>
+                    </div>
+                    <div
+                        class="heatmap-bar consultant-heatmap-bar"
+                        role="img"
+                        aria-label="${user.name}: ${percentage}% complete"
+                    >
+                        <div
+                            class="heatmap-fill"
+                            style="width: ${percentage}%"
+                        >${percentage}%</div>
+                    </div>
+                </div>
+            `;
+
+            skillsForRole.forEach(skill => {
+                if (!skillStats[skill.name]) {
+                    skillStats[skill.name] = { total: 0, complete: 0 };
+                }
+
+                skillStats[skill.name].total++;
+
+                if (user.skills?.[skill.name] === 'Complete') {
+                    skillStats[skill.name].complete++;
+                }
+            });
         });
-
-        const skillsForRole = skillData[user.role] || [];
-        skillsForRole.forEach(s => {
-            if (!skillStats[s.name]) skillStats[s.name] = { total: 0, complete: 0 };
-            skillStats[s.name].total++;
-            if (user.skills[s.name] === 'Complete') {
-                skillStats[s.name].complete++;
-            }
-        });
-    });
 
     for (const [skill, stats] of Object.entries(skillStats)) {
-        const percentage = Math.round((stats.complete / stats.total) * 100) || 0;
+        const percentage = stats.total
+            ? Math.round((stats.complete / stats.total) * 100)
+            : 0;
+
         heatmap.innerHTML += `
             <div class="heatmap-bar">
-                <div class="heatmap-fill" style="width: ${percentage}%">${skill} (${percentage}% Competent)</div>
+                <div class="heatmap-fill" style="width: ${percentage}%">
+                    ${skill} (${percentage}% Competent)
+                </div>
             </div>
         `;
     }
