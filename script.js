@@ -1,10 +1,10 @@
 // --- DATABASE & DATA STRUCTURE ---
 const skillData = {
     "Java Developer": [
-        { name: "Java Basics", level: 1, resource: "YouTube: Java Full Course" },
-        { name: "Object Oriented Prog.", level: 1, resource: "LinkedIn Learning: OOP" },
-        { name: "Spring Boot", level: 2, resource: "Spring Docs" },
-        { name: "Microservices", level: 3, resource: "Udemy: Microservices Architecture" }
+        { name: "Java Basics", level: 1, resource: "YouTube: Java Full Course", url: "https://www.youtube.com/watch?v=xTtL8E4LzTQ" },
+        { name: "Object Oriented Prog.", level: 1, resource: "LinkedIn Learning: OOP", url: "https://www.linkedin.com/learning/topics/object-oriented-programming?u=438836362" },
+        { name: "Spring Boot", level: 2, resource: "Spring Docs", url: "https://docs.spring.io/spring-boot/index.html" },
+        { name: "Microservices", level: 3, resource: "Udemy: Microservices Architecture", url: "https://www.udemy.com/course/microservices-architecture-the-complete-guide/?srsltid=AU7gw4UEZA4tMG1t25odkMRqIA5VkTHZk6rWtva7e8IQBrFNUCozpwo1" }
     ],
     "Junior Manual Tester": [
         { name: "Test Cases Design", level: 1, resource: "ISTQB Syllabus" },
@@ -81,7 +81,7 @@ function renderUserView() {
                 <strong>${skill.name}</strong>
                 <span class="badge lvl-${skill.level}">Level ${skill.level}</span>
             </div>
-            <a href="#" class="resource-link">📚 ${skill.resource}</a>
+             <a href="${skill.url || '#'}" target="_blank" rel="noopener noreferrer" class="resource-link">📚 ${skill.resource}</a>
             <select onchange="updateSkill('${skill.name}', this.value)">
                 <option value="Not Started" ${status === 'Not Started' ? 'selected' : ''}>Not Started</option>
                 <option value="In Progress" ${status === 'In Progress' ? 'selected' : ''}>In Progress</option>
