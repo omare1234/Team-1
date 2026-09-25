@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Matrix & Academy Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <h1>Academy Matrix</h1>
+        <div class="nav-buttons">
+            <button id="btn-user-view" class="active">Consultant View</button>
+            <button id="btn-admin-view">Academy Lead View</button>
+        </div>
+    </nav>
+
+    <main id="app-container">
+        <!-- CONSULTANT VIEW -->
+        <section id="user-view" class="view-section active">
+            <div class="header-card">
+                <h2>Welcome, Consultant</h2>
+                <label for="role-select">Select Your Role:</label>
+                <select id="role-select">
+                    <option value="Java Developer">Java Developer</option>
+                    <option value="Junior Manual Tester">Junior Manual Tester</option>
+                </select>
+            </div>
+
+            <div class="matrix-container">
+                <h3>The Matrix</h3>
+                <div id="skills-grid" class="grid">
+                    <!-- Skills will be injected here by JavaScript -->
+                </div>
+            </div>
+
+            <div class="smart-target-container">
+                <h3>SMART Targeter</h3>
+                <p>Select a missing skill to generate a SMART goal:</p>
+                <select id="gap-select"></select>
+                <button id="generate-smart-btn">Generate Target</button>
+                <div id="smart-output" class="hidden card"></div>
+            </div>
+        </section>
+
+        <!-- ACADEMY LEAD VIEW (ADMIN) -->
+        <section id="admin-view" class="view-section hidden">
+            <div class="header-card">
+                <h2>Academy Lead Dashboard</h2>
+            </div>
+            
+            <div class="grid admin-grid">
+                <div class="card">
+                    <h3>User Management</h3>
+                    <ul id="user-list"></ul>
+                </div>
+
+                <div class="card">
+                    <h3>Global Skills Heatmap</h3>
+                    <div id="heatmap-container">
+                        <!-- Heatmap injected by JS -->
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Target Review</h3>
+                    <ul id="target-list"></ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
