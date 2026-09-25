@@ -11,49 +11,221 @@ const skillData = {
         { name: "Jira / Bug Tracking", level: 1, resource: "Atlassian Docs", url: "https://www.atlassian.com/software/jira/features/bug-tracking" },
         { name: "API Testing (Postman)", level: 2, resource: "Postman Learning Center", url: "https://learning.postman.com/" },
         { name: "Test Automation Basics", level: 3, resource: "YouTube: Selenium Intro", url: "https://www.youtube.com/watch?v=mOAXEQevCAE" }
+    ],
+    "Frontend Developer": [
+        { name: "HTML & CSS Fundamentals", level: 1, resource: "MDN Web Docs", url: "https://developer.mozilla.org/en-US/docs/Web/HTML" },
+        { name: "JavaScript Essentials", level: 1, resource: "MDN JavaScript Guide", url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide" },
+        { name: "React Fundamentals", level: 2, resource: "React Docs", url: "https://react.dev/learn" },
+        { name: "Performance & Accessibility", level: 3, resource: "web.dev Learn", url: "https://web.dev/learn" }
+    ],
+    "DevOps Engineer": [
+        { name: "Linux & Shell Basics", level: 1, resource: "Linux Journey", url: "https://linuxjourney.com/" },
+        { name: "Docker Fundamentals", level: 1, resource: "Docker Docs", url: "https://docs.docker.com/get-started/" },
+        { name: "CI/CD Pipelines", level: 2, resource: "GitHub Actions Docs", url: "https://docs.github.com/en/actions" },
+        { name: "Kubernetes", level: 3, resource: "Kubernetes Docs", url: "https://kubernetes.io/docs/tutorials/kubernetes-basics/" }
+    ],
+    "Data Analyst": [
+        { name: "Excel & Data Basics", level: 1, resource: "Microsoft Excel Training", url: "https://support.microsoft.com/en-us/excel" },
+        { name: "SQL Fundamentals", level: 1, resource: "Mode SQL Tutorial", url: "https://mode.com/sql-tutorial/" },
+        { name: "Python for Data Analysis", level: 2, resource: "pandas Docs", url: "https://pandas.pydata.org/docs/getting_started/index.html" },
+        { name: "Data Visualization", level: 3, resource: "Tableau Training", url: "https://www.tableau.com/learn/training" }
+    ],
+    "Scrum Master": [
+        { name: "Agile Fundamentals", level: 1, resource: "Scrum.org Resources", url: "https://www.scrum.org/resources" },
+        { name: "Scrum Framework", level: 1, resource: "The Scrum Guide", url: "https://scrumguides.org/" },
+        { name: "Facilitation Skills", level: 2, resource: "Atlassian Agile Coach", url: "https://www.atlassian.com/agile" },
+        { name: "Scaling Agile", level: 3, resource: "Scaled Agile Framework", url: "https://scaledagileframework.com/" }
+    ],
+    "Cloud Architect": [
+        { name: "Cloud Fundamentals", level: 1, resource: "AWS Cloud Practitioner", url: "https://aws.amazon.com/training/learn-about/cloud-practitioner/" },
+        { name: "Networking Basics", level: 1, resource: "Azure Fundamentals", url: "https://learn.microsoft.com/en-us/training/paths/azure-fundamentals/" },
+        { name: "Architecture Design", level: 2, resource: "AWS Well-Architected Framework", url: "https://aws.amazon.com/architecture/well-architected/" },
+        { name: "Security & Compliance", level: 3, resource: "Google Cloud Architecture Center", url: "https://cloud.google.com/architecture" }
+    ],
+    "UX/UI Designer": [
+        { name: "Design Fundamentals", level: 1, resource: "Nielsen Norman Group Articles", url: "https://www.nngroup.com/articles/" },
+        { name: "Wireframing & Prototyping", level: 1, resource: "Figma Resources", url: "https://www.figma.com/resources/learn-design/" },
+        { name: "User Research", level: 2, resource: "Interaction Design Foundation", url: "https://www.interaction-design.org/literature/topics/user-research" },
+        { name: "Design Systems", level: 3, resource: "Design Systems Handbook", url: "https://www.designbetter.co/design-systems-handbook" }
     ]
 };
 
-// Initialize LocalStorage for persistence
-if (!localStorage.getItem('academyData')) {
+// --- DATABASE INITIALIZATION ---
+// NOTE: This is a client-side demo. Passwords are stored in plain text in
+// localStorage, which is fine for prototyping but NOT secure for real users
+// or real passwords. A production version needs a real backend with hashed
+// credentials and server-side session checks.
+function seedDatabase() {
     const initialData = {
         users: [
-            { id: 1, name: "Current User", role: "Java Developer", skills: {}, targets: [] },
-            { id: 2, name: "Sarah Smith", role: "Junior Manual Tester", skills: {"Test Cases Design": "Complete"}, targets: ["Learn Postman by Friday"] }
+            { id: 1, name: "Alex Consultant", username: "alex", password: "consultant123", accountType: "consultant", role: "Java Developer", skills: {}, targets: [] },
+            { id: 2, name: "Sarah Smith", username: "sarah", password: "consultant123", accountType: "consultant", role: "Junior Manual Tester", skills: { "Test Cases Design": "Complete" }, targets: ["Learn Postman by Friday"] },
+            { id: 3, name: "Jordan Lead", username: "admin", password: "admin123", accountType: "admin", role: null, skills: {}, targets: [] }
         ],
-        currentUserIndex: 0 // Simulating a logged-in user
+        nextUserId: 4
     };
     localStorage.setItem('academyData', JSON.stringify(initialData));
+    return initialData;
 }
 
 let db = JSON.parse(localStorage.getItem('academyData'));
-let currentUser = db.users[db.currentUserIndex];
+// If there's no data yet, or it's from the old schema (no username/accountType
+// fields), reset to the new seed data rather than crashing on login.
+if (!db || !db.users || !db.users[0] || !db.users[0].username || !db.users[0].accountType) {
+    db = seedDatabase();
+}
+
+let currentUser = null; // set on successful login
+
+function saveData() {
+    localStorage.setItem('academyData', JSON.stringify(db));
+}
+
+// --- SESSION HELPERS ---
+function getSession() {
+    const raw = localStorage.getItem('academySession');
+    return raw ? JSON.parse(raw) : null;
+}
+function setSession(userId) {
+    localStorage.setItem('academySession', JSON.stringify({ userId }));
+}
+function clearSession() {
+    localStorage.removeItem('academySession');
+}
 
 // --- DOM ELEMENTS ---
+const loginScreen = document.getElementById('login-screen');
+const appWrapper = document.getElementById('app-wrapper');
+const loginFormContainer = document.getElementById('login-form-container');
+const registerFormContainer = document.getElementById('register-form-container');
+const loginForm = document.getElementById('login-form');
+const registerForm = document.getElementById('register-form');
+const loginError = document.getElementById('login-error');
+const registerError = document.getElementById('register-error');
+const welcomeMsg = document.getElementById('welcome-msg');
+const btnLogout = document.getElementById('btn-logout');
+
 const userView = document.getElementById('user-view');
 const adminView = document.getElementById('admin-view');
-const btnUser = document.getElementById('btn-user-view');
-const btnAdmin = document.getElementById('btn-admin-view');
 const roleSelect = document.getElementById('role-select');
 const skillsGrid = document.getElementById('skills-grid');
 const gapSelect = document.getElementById('gap-select');
 
-// --- NAVIGATION ---
-btnUser.addEventListener('click', () => {
-    userView.classList.remove('hidden');
-    adminView.classList.add('hidden');
-    btnUser.classList.add('active');
-    btnAdmin.classList.remove('active');
-    renderUserView();
+// --- LOGIN / REGISTER SCREEN SWITCHING ---
+document.getElementById('show-register-link').addEventListener('click', (e) => {
+    e.preventDefault();
+    loginFormContainer.classList.add('hidden');
+    registerFormContainer.classList.remove('hidden');
+});
+document.getElementById('show-login-link').addEventListener('click', (e) => {
+    e.preventDefault();
+    registerFormContainer.classList.add('hidden');
+    loginFormContainer.classList.remove('hidden');
 });
 
-btnAdmin.addEventListener('click', () => {
-    adminView.classList.remove('hidden');
-    userView.classList.add('hidden');
-    btnAdmin.classList.add('active');
-    btnUser.classList.remove('active');
-    renderAdminView();
+// --- LOGIN ---
+loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const username = document.getElementById('login-username').value.trim();
+    const password = document.getElementById('login-password').value;
+
+    const user = db.users.find(u =>
+        u.username.toLowerCase() === username.toLowerCase() && u.password === password
+    );
+
+    if (!user) {
+        loginError.innerText = 'Invalid username or password.';
+        loginError.classList.remove('hidden');
+        return;
+    }
+
+    loginError.classList.add('hidden');
+    loginForm.reset();
+    setSession(user.id);
+    enterApp(user);
 });
+
+// --- CONSULTANT SELF-REGISTRATION ---
+// Only consultants can self-register here. Academy Lead accounts are
+// provisioned separately (seeded above) and are not created through this form.
+registerForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('reg-name').value.trim();
+    const username = document.getElementById('reg-username').value.trim();
+    const password = document.getElementById('reg-password').value;
+    const role = document.getElementById('reg-role').value;
+
+    if (!name || !username || !password) {
+        registerError.innerText = 'Please fill in all fields.';
+        registerError.classList.remove('hidden');
+        return;
+    }
+
+    const usernameTaken = db.users.some(u => u.username.toLowerCase() === username.toLowerCase());
+    if (usernameTaken) {
+        registerError.innerText = 'That username is already taken.';
+        registerError.classList.remove('hidden');
+        return;
+    }
+
+    registerError.classList.add('hidden');
+
+    const newUser = {
+        id: db.nextUserId++,
+        name,
+        username,
+        password,
+        accountType: 'consultant',
+        role,
+        skills: {},
+        targets: []
+    };
+    db.users.push(newUser);
+    saveData();
+
+    registerForm.reset();
+    setSession(newUser.id);
+    enterApp(newUser);
+});
+
+// --- LOGOUT ---
+btnLogout.addEventListener('click', () => {
+    clearSession();
+    currentUser = null;
+    location.reload();
+});
+
+// --- ENTER APP (role-gated: each account type only ever sees its own view) ---
+function enterApp(user) {
+    currentUser = user;
+    loginScreen.classList.add('hidden');
+    appWrapper.classList.remove('hidden');
+    welcomeMsg.innerText = `Signed in as ${user.name} (${user.accountType === 'admin' ? 'Academy Lead' : 'Consultant'})`;
+
+    userView.classList.add('hidden');
+    adminView.classList.add('hidden');
+
+    if (user.accountType === 'consultant') {
+        userView.classList.remove('hidden');
+        renderUserView();
+    } else if (user.accountType === 'admin') {
+        adminView.classList.remove('hidden');
+        renderAdminView();
+    }
+}
+
+// --- APP INIT: resume session if one exists ---
+(function init() {
+    const session = getSession();
+    if (session) {
+        const user = db.users.find(u => u.id === session.userId);
+        if (user) {
+            enterApp(user);
+            return;
+        }
+    }
+    // No valid session -> login screen stays visible (its default state)
+})();
 
 // --- USER VIEW LOGIC ---
 roleSelect.addEventListener('change', (e) => {
@@ -63,17 +235,17 @@ roleSelect.addEventListener('change', (e) => {
 });
 
 function renderUserView() {
+    if (!currentUser || currentUser.accountType !== 'consultant') return; // guard
+
     roleSelect.value = currentUser.role;
     skillsGrid.innerHTML = '';
     gapSelect.innerHTML = '<option value="">-- Select a Skill Gap --</option>';
-    
-    const roleSkills = skillData[currentUser.role];
+
+    const roleSkills = skillData[currentUser.role] || [];
 
     roleSkills.forEach(skill => {
-        // Skill Status
         const status = currentUser.skills[skill.name] || 'Not Started';
-        
-        // Build Card
+
         const card = document.createElement('div');
         card.className = 'skill-card';
         card.innerHTML = `
@@ -90,7 +262,6 @@ function renderUserView() {
         `;
         skillsGrid.appendChild(card);
 
-        // Populate Gap Selector if not complete
         if (status !== 'Complete') {
             const option = document.createElement('option');
             option.value = skill.name;
@@ -100,11 +271,11 @@ function renderUserView() {
     });
 }
 
-window.updateSkill = function(skillName, newStatus) {
+window.updateSkill = function (skillName, newStatus) {
     currentUser.skills[skillName] = newStatus;
     saveData();
-    renderUserView(); // re-render to update gap selector
-}
+    renderUserView();
+};
 
 // SMART Targeter Logic
 document.getElementById('generate-smart-btn').addEventListener('click', () => {
@@ -118,38 +289,36 @@ document.getElementById('generate-smart-btn').addEventListener('click', () => {
         <strong>Relevant:</strong> This is critical for my role as a ${currentUser.role}.<br>
         <strong>Time-bound:</strong> I will accomplish this by next Friday.
     `;
-    
+
     const outputDiv = document.getElementById('smart-output');
     outputDiv.innerHTML = `<h4>Your Custom SMART Goal:</h4><p>${smartGoal}</p>`;
     outputDiv.classList.remove('hidden');
 
-    // Save target to DB
     currentUser.targets.push(`Master ${skill} by next Friday`);
     saveData();
 });
 
 // --- ADMIN VIEW LOGIC ---
 function renderAdminView() {
+    if (!currentUser || currentUser.accountType !== 'admin') return; // guard
+
     const userList = document.getElementById('user-list');
     const targetList = document.getElementById('target-list');
     const heatmap = document.getElementById('heatmap-container');
-    
+
     userList.innerHTML = '';
     targetList.innerHTML = '';
     heatmap.innerHTML = '';
 
-    let skillStats = {}; // To calculate heatmap
+    let skillStats = {};
 
-    db.users.forEach(user => {
-        // User List
+    db.users.filter(u => u.accountType === 'consultant').forEach(user => {
         userList.innerHTML += `<li><strong>${user.name}</strong> - ${user.role}</li>`;
-        
-        // Target Review
+
         user.targets.forEach(t => {
             targetList.innerHTML += `<li>${user.name}: <em>${t}</em></li>`;
         });
 
-        // Heatmap Calc
         const skillsForRole = skillData[user.role] || [];
         skillsForRole.forEach(s => {
             if (!skillStats[s.name]) skillStats[s.name] = { total: 0, complete: 0 };
@@ -160,7 +329,6 @@ function renderAdminView() {
         });
     });
 
-    // Render Heatmap
     for (const [skill, stats] of Object.entries(skillStats)) {
         const percentage = Math.round((stats.complete / stats.total) * 100) || 0;
         heatmap.innerHTML += `
@@ -170,11 +338,3 @@ function renderAdminView() {
         `;
     }
 }
-
-function saveData() {
-    db.users[db.currentUserIndex] = currentUser;
-    localStorage.setItem('academyData', JSON.stringify(db));
-}
-
-// Init
-renderUserView();

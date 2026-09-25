@@ -16,6 +16,87 @@ body {
     padding: 0;
 }
 
+/* --- LOGIN / REGISTER SCREEN --- */
+.login-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.login-card {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    width: 100%;
+    max-width: 380px;
+}
+
+.login-card h1 {
+    text-align: center;
+    color: var(--primary);
+    margin-top: 0;
+}
+
+.login-card h2 {
+    text-align: center;
+    margin-top: 0;
+}
+
+.login-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.login-card label {
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.login-card input,
+.login-card select {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.login-card button {
+    margin-top: 1rem;
+}
+
+.error-msg {
+    color: #dc2626;
+    font-size: 0.85rem;
+    margin: 6px 0 0 0;
+}
+
+.switch-link {
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+
+.switch-link a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.hint-text {
+    text-align: center;
+    font-size: 0.75rem;
+    color: #6b7280;
+    margin-top: 1rem;
+}
+
+/* --- APP LAYOUT --- */
 .navbar {
     background-color: var(--primary);
     color: white;
@@ -25,6 +106,16 @@ body {
     align-items: center;
 }
 
+.navbar .nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.navbar #welcome-msg {
+    font-size: 0.9rem;
+}
+
 .navbar button {
     background: transparent;
     color: white;
@@ -32,7 +123,6 @@ body {
     padding: 0.5rem 1rem;
     cursor: pointer;
     border-radius: 5px;
-    margin-left: 10px;
 }
 
 .navbar button.active, .navbar button:hover {
@@ -96,10 +186,10 @@ button {
     border: none;
 }
 
-button:hover { background: #1d4ed8; }
+button:hover { background: #6b1cb0; }
 
 .resource-link {
-    color: #2563eb;
+    color: var(--primary);
     text-decoration: none;
     font-size: 0.9rem;
 }
