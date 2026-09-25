@@ -408,17 +408,29 @@ function renderAdminView() {
             });
         });
 
-    for (const [skill, stats] of Object.entries(skillStats)) {
-        const percentage = stats.total
-            ? Math.round((stats.complete / stats.total) * 100)
-            : 0;
+    // Global Skills Heatmap: number of skills defined for each job title.
+    const roleEntries = Object.entries(skillData);
+    const maxSkills = Math.max(...roleEntries.map(([, skills]) => skills.length), 1);
 
-        heatmap.innerHTML += `
-            <div class="heatmap-bar">
-                <div class="heatmap-fill" style="width: ${percentage}%">
-                    ${skill} (${percentage}% Competent)
-                </div>
-            </div>
-        `;
-    }
+    heatmap.innerHTML = `
+        <div class="role-heatmap" role="list" aria-label="Number of skills by job title">
+            ${roleEntries.map(([role, skills]) => {
+                const intensity = skills.length / maxSkills;
+                const lightness = 88 - intensity * 48;
+
+                return `
+                    <div
+                        class="role-heatmap-cell"
+                        role="listitem"
+                        aria-label="${role}: ${skills.length} skills"
+                        style="background-color: hsl(0 78% ${lightness}%); color: ${lightness < 58 ? '#fff' : '#3b0a0a'}"
+                    >
+                        <strong>${role}</strong>
+                        <span>${skills.length} skills</span>
+                    </div>
+                `;
+            }).join('')}
+        </div>
+        <p class="role-heatmap-legend">Darker red indicates more skills for the job title.</p>
+    `;
 }
